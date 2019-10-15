@@ -5,7 +5,7 @@ const users = [{
 }, {
 	id: 2,
 	name: 'Jessica',
-	schoolId: 999
+	schoolId: 102
 }];
 
 const grades = [{
@@ -39,7 +39,44 @@ const getGrades = (schoolId) => {
 	});
 };
 
-getUser(2).then((user) => {
+const getStatus = (userId) => {
+	let user;
+	return getUser(userId).then((tempUser) => {
+		user = tempUser;
+		return getGrades(user.schoolId);
+	}).then((grades) => {
+		let average = 0;
+		if(grades.length > 0) {
+			average = grades.map((grade) => grade.grade).reduce((a, b) =>  a + b) / grades.length;
+		}
+		//console.log(average);
+		return `${user.name} has a ${average} %`;
+	});
+};
+
+const getStatusAlt = async (userId) => {
+	//throw new Error('This is an error');
+	//return 'algo';
+	const user = await getUser(userId);
+	const grades = await getGrades(user.schoolId);
+	//console.log(user, grades);
+	let average = 0;
+		if(grades.length > 0) {
+			average = grades.map((grade) => grade.grade).reduce((a, b) =>  a + b) / grades.length;
+		}
+		//console.log(average);
+		return `${user.name} has a ${average} %`;
+};
+
+getStatusAlt(2).then((name) => {
+	console.log(name);
+}).catch((e) => {
+	console.log(e);
+}); 
+
+console.log(getStatusAlt());
+
+/*getUser(2).then((user) => {
 	console.log(user);
 }).catch((e) => {
 	console.log(e);
@@ -50,3 +87,9 @@ getGrades(103).then((grade) => {
 }).catch((e) => {
 	console.log(e);
 });
+
+getStatus(1).then((grade) => {
+	console.log(grade);
+}).catch((e) => {
+	console.log(e);
+}); */
