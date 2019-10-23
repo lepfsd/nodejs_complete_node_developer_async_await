@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/lepfsd/nodejs_complete_node_developer_async_await#readme",
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.1"
   }
 }
